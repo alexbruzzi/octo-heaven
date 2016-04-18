@@ -1,16 +1,17 @@
-proj_dir = ENV['DIR_API_CONSUMER']
+proj_dir = ENV['DIR_WS_ANALYTICS']
 
-script_path = File.join(proj_dir, 'start.sh')
-script_name = 'api_consumer'
+script_name = 'analytics_ws'
 
 pid_file = File.join(proj_dir, 'shared', 'pids', script_name + '.pid')
 log_file = File.join(proj_dir, 'shared', 'log', script_name + '.log')
 
+port = 9007
+
 God.watch do |w|
   w.name = script_name
-  w.group = 'apiconsumer'
+  w.group = 'webservice'
 
-  w.start = "cd #{ proj_dir } && bundle exec unicorn -c config/unicorn.rb"
+  w.start = "cd #{ proj_dir } && rackup -p #{ port }"
 
   # QUIT gracefully shuts down workers
   w.stop = "kill -QUIT `cat #{ pid_file }`"

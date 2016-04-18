@@ -6,6 +6,8 @@ log_file = File.join(proj_dir, 'shared', 'logs', script_name + '.log')
 
 God.watch do |w|
   w.name = script_name
+
+  w.group = 'apihandler'
   w.log = log_file
   w.dir = proj_dir
   w.env = ENV
