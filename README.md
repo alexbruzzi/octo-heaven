@@ -88,3 +88,19 @@ god -c octo.god start webservice
 ```
 god -c octo.god stop webservice
 ```
+
+## Dashboard
+
+This group provides 2 types of dashboard services, that is, Internal Dashboard and External Dashboard. Use this to turn all the dashboards on or off.
+
+### Start
+
+```
+god -c octo.god start dashboard
+```
+
+### Stop
+
+```
+god -c octo.god stop dashboard
+```
