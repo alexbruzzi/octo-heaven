@@ -14,6 +14,10 @@ God.watch do |w|
 
   w.start = "cd #{ proj_dir } && bundle exec rake resque:scheduler"
 
+  w.stop = "kill -s QUIT `cat #{ pid_file }`"
+
+  w.env = { 'PIDFILE' => pid_file, 'BACKGROUND' => 'yes'}
+
   w.log = log_file
   w.pid_file = pid_file
 

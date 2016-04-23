@@ -1,33 +1,35 @@
 proj_dir = ENV['DIR_API_CONSUMER']
 
-script_path = File.join(proj_dir, 'start.sh')
 script_name = 'api_consumer'
 
-pid_file = File.join(proj_dir, 'shared', 'pids', script_name + '.pid')
+# Specify the PID location of consumer monitor process here
+# as this is a daemonized script.
+pid_file = File.join(proj_dir, 'shared', 'pids', 'api_consumer_monitor.pid')
 log_file = File.join(proj_dir, 'shared', 'log', script_name + '.log')
 
 God.watch do |w|
   w.name = script_name
   w.group = 'apiconsumer'
 
-  w.start = "cd #{ proj_dir } && bundle exec unicorn -c config/unicorn.rb"
+  w.start = "cd #{ proj_dir } && ruby consumer.rb start"
 
-  # QUIT gracefully shuts down workers
-  w.stop = "kill -QUIT `cat #{ pid_file }`"
+  w.stop = "cd #{ proj_dir } && ruby consumer.rb stop"
 
-  # USR2 causes the master to re-create itself and spawn a new worker pool
-  w.restart = "kill -USR2 `cat #{ pid_file }`"
+  w.restart = "cd #{ proj_dir } && ruby consumer.rb restart"
 
-  w.start_grace = 10.seconds
-  w.restart_grace = 10.seconds
-  w.interval = 30.minutes
+  w.log = log_file
+  w.dir = proj_dir
+  w.env = ENV
+
   w.pid_file = pid_file
 
-  w.behavior(:clean_pid_file)
+  w.interval = 15.minutes
+
+  w.start_grace = 10.seconds
 
   w.start_if do |start|
     start.condition(:process_running) do |c|
-      c.interval = 5.seconds
+      c.interval = 10.seconds
       c.running = false
     end
   end
@@ -56,10 +58,6 @@ God.watch do |w|
       c.retry_within = 2.hours
     end
   end
-
-  w.log = log_file
-  w.dir = proj_dir
-  w.env = ENV
 
 end
 
