@@ -11,10 +11,10 @@ God.watch do |w|
   w.name = script_name
   w.group = 'dashboard'
 
-  w.start = "cd #{ proj_dir } && rackup -p #{ port }"
+  w.start = "cd #{ proj_dir } && rackup -p #{ port } --pid #{ pid_file } --daemonize"
 
   # QUIT gracefully shuts down workers
-  w.stop = "kill -QUIT `cat #{ pid_file }`"
+  w.stop = "kill -TERM `cat #{ pid_file }`"
 
   # USR2 causes the master to re-create itself and spawn a new worker pool
   w.restart = "kill -USR2 `cat #{ pid_file }`"
