@@ -12,7 +12,7 @@ God.watch do |w|
   w.dir = proj_dir
   w.interval = 30.seconds
 
-  w.start = "cd #{ proj_dir } && bundle exec rake resque:scheduler"
+  w.start = "cd #{ proj_dir } && bundle install && bundle exec rake resque:scheduler"
 
   w.stop = "kill -s QUIT `cat #{ pid_file }`"
 

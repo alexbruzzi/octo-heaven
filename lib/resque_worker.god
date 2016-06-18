@@ -15,7 +15,7 @@ num_workers.times do |num|
     pid_file = File.join(proj_dir, 'shared', 'pids', "#{ script_name }-#{ num }" + '.pid')
     log_file = File.join(proj_dir, 'shared', 'log', "#{ script_name }-#{ num }" + '.log')
 
-    w.start = "cd #{ proj_dir } && QUEUE=* rake resque:work"
+    w.start = "cd #{ proj_dir } && bundle install && QUEUE=* rake resque:work"
 
     w.stop = "kill -s QUIT `cat #{ pid_file }`"
 

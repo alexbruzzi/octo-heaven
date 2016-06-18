@@ -15,7 +15,7 @@ God.watch do |w|
   w.dir = proj_dir
   w.env = ENV
 
-  w.start = "cd #{ proj_dir } && bundle exec unicorn -c config/unicorn.rb -D"
+  w.start = "cd #{ proj_dir } && bundle install && bundle exec unicorn -c config/unicorn.rb -D"
 
   # QUIT gracefully shuts down workers
   w.stop = "cd #{ proj_dir} && kill -QUIT `cat #{ pid_file }`"

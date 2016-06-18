@@ -11,7 +11,7 @@ God.watch do |w|
   w.name = script_name
   w.group = 'dashboard'
 
-  w.start = "cd #{ proj_dir } && rackup -p #{ port } --pid #{ pid_file } --daemonize"
+  w.start = "cd #{ proj_dir } && bundle install && rackup -p #{ port } --pid #{ pid_file } --daemonize"
 
   # QUIT gracefully shuts down workers
   w.stop = "kill -TERM `cat #{ pid_file }`"

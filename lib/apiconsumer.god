@@ -11,7 +11,7 @@ God.watch do |w|
   w.name = script_name
   w.group = 'apiconsumer'
 
-  w.start = "cd #{ proj_dir } && ruby consumer.rb start"
+  w.start = "cd #{ proj_dir } && bundle install && ruby consumer.rb start"
 
   w.stop = "cd #{ proj_dir } && ruby consumer.rb stop"
 
