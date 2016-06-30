@@ -1,12 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    dotenv (2.1.1)
     god (0.13.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   god
 
 BUNDLED WITH
